@@ -28,7 +28,12 @@ public class PhoneBook {
         if (phoneBook.isEmpty())
             return result;
 
-        result = phoneBook.get(name).toString();
+        if (this.phoneBook.containsKey(name)) {
+            result = phoneBook.get(name).toString();
+        }
+        else
+            result = "Not found";
+
         return result;
     }
 

@@ -75,5 +75,6 @@ public class Task3 {
         System.out.printf("Name4: %s\n", pb.get("Name4"));
         System.out.printf("Name5: %s\n", pb.get("Name5"));
         System.out.printf("Psy: %s\n", pb.get("Psy"));
+        System.out.printf("Name6: %s\n", pb.get("Name6"));
     }
 }
