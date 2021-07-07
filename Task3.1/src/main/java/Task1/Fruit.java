@@ -2,7 +2,7 @@ package Task1;
 
 public abstract class Fruit {
     private float weight;
-    private String type;
+//    private String type ;
 
 
 
@@ -14,13 +14,13 @@ public abstract class Fruit {
         this.weight = weight;
     }
 
-    public String getType() {
-        return type;
-    }
+//    public String getType() {
+//        return type;
+//    }
 
-    public void setType(String type) {
-        String[] str = type.split("\\.");
-        this.type = str[str.length-1];
-    }
+//    public void setType(String type) {
+//        String[] str = type.split("\\.");
+//        this.type = str[str.length-1];
+//    }
 }
 

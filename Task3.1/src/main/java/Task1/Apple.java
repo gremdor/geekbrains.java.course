@@ -6,8 +6,6 @@ public class Apple extends Fruit {
     public Apple() {
         super();
         setWeight(WEIGHT);
-        setType(this.getClass().getName());
+//        setType(this.getClass().getSimpleName()); //getName());
     }
-
-
 }

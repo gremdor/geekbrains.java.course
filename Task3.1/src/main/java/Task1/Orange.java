@@ -6,7 +6,7 @@ public class Orange extends Fruit {
     public Orange() {
         super();
         setWeight(WEIGHT);
-        setType(this.getClass().getName());
+//        setType(this.getClass().getName());
     }
 
 

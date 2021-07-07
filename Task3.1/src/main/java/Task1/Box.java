@@ -7,9 +7,6 @@ public class Box<T extends Fruit> {
     private final double EPS = 0.0001f;
     private ArrayList<T> items;
 
-    private String type;
-
-
     public float getWeight() {
         float weight = 0f;
         for (int i = 0; i < items.size(); i++)
@@ -20,18 +17,18 @@ public class Box<T extends Fruit> {
 
     public Box() {
         this.items = new ArrayList<T>();
-        this.type = null;
+//        this.type = null;
     }
 
     public boolean add(T item) {
         if (items.isEmpty()) {
             items.add(item);
-            type = item.getType();
         } else {
-            if (type == item.getType()) {
+            if (items.get(0).getClass().equals(item.getClass())) {
                 items.add(item);
             } else {
-                System.out.printf("The Box already contains %ss. You can't put %ss here.\n", this.type, item.getType());
+                System.out.printf("The Box already contains %ss. You can't put %ss here.\n",
+                        items.get(0).getClass().getSimpleName(), item.getClass().getSimpleName());
                 return false;
             }
         }
@@ -55,7 +52,7 @@ public class Box<T extends Fruit> {
                 return;
             }
         }
-        this.type = null;
+//        this.type = null;
     }
 
 
