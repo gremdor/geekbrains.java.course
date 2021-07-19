@@ -15,15 +15,16 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+// форма клиента чата
 public class Controller {
     @FXML
     TextArea chatArea;
 
     @FXML
-    TextField messageField, usernameField;
+    TextField messageField, usernameField, usernameInfo;
 
     @FXML
-    HBox authPanel, msgPanel;
+    HBox authPanel, msgPanel, infoPanel;
 
     @FXML
     ListView<String> clientsListView;
@@ -32,15 +33,21 @@ public class Controller {
     private DataInputStream in;
     private DataOutputStream out;
 
+    //определить видимость элементов формы в зависимости от подключенности клиента
     public void setAuthorized(boolean authorized) {
         msgPanel.setVisible(authorized);
         msgPanel.setManaged(authorized);
-        authPanel.setVisible(!authorized);
-        authPanel.setManaged(!authorized);
         clientsListView.setVisible(authorized);
         clientsListView.setManaged(authorized);
+
+        authPanel.setVisible(!authorized);
+        authPanel.setManaged(!authorized);
+
+        infoPanel.setVisible(authorized);
+        infoPanel.setManaged(authorized);
     }
 
+    //отправить сообщение в чат
     public void sendMessage() {
         try {
             out.writeUTF(messageField.getText());
@@ -51,6 +58,7 @@ public class Controller {
         }
     }
 
+    //разлогиниться
     public void sendCloseRequest() {
         try {
             if (out != null) {
@@ -61,16 +69,19 @@ public class Controller {
         }
     }
 
+    //авторизоваться в чате
     public void tryToAuth() {
         connect();
         try {
             out.writeUTF("/auth " + usernameField.getText());
+            usernameInfo.setText("Connected as " + usernameField.getText());
             usernameField.clear();
         } catch (IOException e) {
             showError("Невозможно отправить запрос авторизации на сервер");
         }
     }
 
+    //подключиться к локальному серверу чата на порт 8189
     public void connect() {
         if (socket != null && !socket.isClosed()) {
             return;
@@ -85,6 +96,7 @@ public class Controller {
         }
     }
 
+    //обработка ответов от сервера: результат авторизации, выход, получение списка участников
     private void logic() {
         try {
             while (true) {
@@ -125,6 +137,7 @@ public class Controller {
         }
     }
 
+    //выход из чата и закрытие соединения с сервером
     private void closeConnection() {
         setAuthorized(false);
         try {
@@ -154,6 +167,7 @@ public class Controller {
         new Alert(Alert.AlertType.ERROR, message, ButtonType.OK).showAndWait();
     }
 
+    //private messaging
     public void clientsListDoubleClick(MouseEvent mouseEvent) {
         if (mouseEvent.getClickCount() == 2) {
             String selectedUser = clientsListView.getSelectionModel().getSelectedItem();

@@ -16,6 +16,7 @@ public class ClientHandler {
         return username;
     }
 
+    // инициализировать каналы (in\out) сообщений клиента и запустить в своем потоке
     public ClientHandler(Server server, Socket socket) {
         try {
             this.server = server;
@@ -28,6 +29,7 @@ public class ClientHandler {
         }
     }
 
+    // отправлять сообщения клиенту
     public void sendMessage(String message) {
         try {
             out.writeUTF(message);
@@ -36,6 +38,8 @@ public class ClientHandler {
         }
     }
 
+    // читать сообщения от клиента (командные, информационные), пока он не отключился
+    // если отключился ,то удалить его из списка активных клиентов (освободив занятое имя)
     private void logic() {
         try {
             while (!consumeAuthorizeMessage(in.readUTF()));
@@ -49,6 +53,8 @@ public class ClientHandler {
         }
     }
 
+    // обработать информационное (для одного или всех  участников чата) или командное (отключиться)
+    // сообщение от клиента
     private boolean consumeRegularMessage(String inputMessage) {
         if (inputMessage.startsWith("/")) {
             if (inputMessage.equals("/exit")) {
@@ -65,6 +71,7 @@ public class ClientHandler {
         return true;
     }
 
+    // обработать авторизационное сообщение от клиента (проверить имя и подключить к чату)
     private boolean consumeAuthorizeMessage(String message) {
         if (message.startsWith("/auth ")) { // /auth bob
             String[] tokens = message.split("\\s+");
@@ -91,6 +98,7 @@ public class ClientHandler {
         }
     }
 
+    // закрыть подключение клиента
     private void closeConnection() {
         try {
             if (in != null) {
