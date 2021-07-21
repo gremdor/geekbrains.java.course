@@ -1,5 +1,8 @@
 package ru.geekbrains.june.chat.server;
 
+import ru.geekbrains.june.chat.db.DataBase;
+
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -28,16 +31,26 @@ public class Server {
 
     // добавление нового пользователя чата в список участников
     public synchronized void subscribe(ClientHandler c) {
-        broadcastMessage("В чат зашел пользователь " + c.getUsername());
-        clients.add(c);
-        broadcastClientList();
+        if (DataBase.connect()){
+            DataBase.setUserStatusConnected(c.getUserId());
+            DataBase.disconnect();
+            broadcastMessage("В чат зашел пользователь " + c.getUsername());
+            clients.add(c);
+            broadcastClientList();
+        } else
+            c.sendMessage("SERVER: Ошибка подключения к базе данных. Попробуйте позже.");
     }
 
     // удаление пользователя из списка участников чата
     public synchronized void unsubscribe(ClientHandler c) {
-        clients.remove(c);
-        broadcastMessage("Из чата вышел пользователь " + c.getUsername());
-        broadcastClientList();
+        if (DataBase.connect()){
+            DataBase.setUserStatusDisconnected(c.getUserId());
+            DataBase.disconnect();
+            clients.remove(c);
+            broadcastMessage("Из чата вышел пользователь " + c.getUsername());
+            broadcastClientList();
+        } else
+            c.sendMessage("SERVER: Ошибка подключения к базе данных. Попробуйте позже.");
     }
 
     // отправить сообщение на всех участников чата
