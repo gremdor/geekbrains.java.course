@@ -1,5 +1,8 @@
 package ru.geekbrains.june.chat.server;
 
+import ru.geekbrains.june.chat.db.DataBase;
+
+import javax.xml.crypto.Data;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,11 +12,24 @@ public class ClientHandler {
     private Server server;
     private Socket socket;
     private String username;
+    private Integer userId;
     private DataInputStream in;
     private DataOutputStream out;
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     // инициализировать каналы (in\out) сообщений клиента и запустить в своем потоке
@@ -42,8 +58,8 @@ public class ClientHandler {
     // если отключился ,то удалить его из списка активных клиентов (освободив занятое имя)
     private void logic() {
         try {
-            while (!consumeAuthorizeMessage(in.readUTF()));
-            while (consumeRegularMessage(in.readUTF()));
+            while (!consumeAuthorizeMessage(in.readUTF())) ;
+            while (consumeRegularMessage(in.readUTF())) ;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -84,11 +100,17 @@ public class ClientHandler {
                 return false;
             }
             String selectedUsername = tokens[1];
-            if (server.isUsernameUsed(selectedUsername)) {
-                sendMessage("SERVER: Данное имя пользователя уже занято");
+            if (DataBase.connect()) {
+                if (DataBase.isUserNameUsed(selectedUsername, this)) {
+                    sendMessage("SERVER: Данное имя пользователя уже занято");
+                    return false;
+                }
+                DataBase.disconnect();
+            } else {
+                sendMessage("SERVER: Ошибка подключения к базе данных. Попробуйте позже.");
                 return false;
             }
-            username = selectedUsername;
+//            username = selectedUsername;
             sendMessage("/authok");
             server.subscribe(this);
             return true;
