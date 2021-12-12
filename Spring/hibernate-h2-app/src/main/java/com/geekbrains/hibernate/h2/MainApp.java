@@ -6,18 +6,21 @@ public class MainApp {
         sessionFactoryUtils.init();
         try {
             ProductDao productDao = new ProductDaoImpl(sessionFactoryUtils);
+            ClientDao clientDao = new ClientDaoImpl(sessionFactoryUtils);
+            OrderDao orderDao = new OrderDaoImpl(sessionFactoryUtils);
 
+            System.out.println("=====  List of Products  =====");
             System.out.println(productDao.findAll());
+            System.out.println("=====  List of Clients  =====  ");
+            System.out.println(clientDao.findAll());
+            System.out.println("=====  List of Orders  =====  ");
+            System.out.println(orderDao.findAll());
 
-            Product pr = productDao.findById(2L);
-            System.out.println(pr);
-            pr.setPrice(pr.getPrice() + 13);
-            pr.setTitle(pr.getTitle()+"_new");
-            productDao.saveOrUpdate(pr);
+            System.out.println("=====  List of Clients who bought the Product id=2 =====  ");
+            System.out.println(productDao.findWhoBought(2L));
+            System.out.println("=====  List of Products that were bought by Client id=4 =====  ");
+            System.out.println(clientDao.findWhatBought(4L));
 
-            productDao.deleteById(3L);
-
-            System.out.println(productDao.findAll());
 
         } catch (Exception e) {
             e.printStackTrace();

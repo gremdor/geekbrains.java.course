@@ -4,20 +4,17 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "clients")
+public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "name")
     private String title;
 
-    @Column(name = "price")
-    private int price;
-
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
     public Long getId() {
@@ -36,14 +33,6 @@ public class Product {
         this.title = title;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -54,12 +43,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Client{" +
                 "id=" + id +
                 ", title='" + title +
-                ", price=" + price +
-//                ", ordered " + orders.size() + " times" +
-                '}' + '\n';
+//                ", made " + orders.size() + " orders" +
+                '}' + '\n' ;
     }
 }
-

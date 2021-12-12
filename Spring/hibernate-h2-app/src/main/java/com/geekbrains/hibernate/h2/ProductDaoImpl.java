@@ -1,6 +1,7 @@
 package com.geekbrains.hibernate.h2;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 // void deleteById(Long id),
 // Product saveOrUpdate(Product product));
 
+@Component
 public class ProductDaoImpl implements ProductDao {
     private SessionFactoryUtils sessionFactoryUtils;
 
@@ -17,17 +19,17 @@ public class ProductDaoImpl implements ProductDao {
         this.sessionFactoryUtils = sessionFactoryUtils;
     }
 
-    @Override
-    public Product findById(Long id) {
-        try (Session session = sessionFactoryUtils.getSession()) {
-            session.beginTransaction();
-            Product product = session.get(Product.class, id);
-            session.getTransaction().commit();
-            return product;
-        }
-    }
-
-
+//    @Override
+//    public Product findById(Long id) {
+//        try (Session session = sessionFactoryUtils.getSession()) {
+//            session.beginTransaction();
+//            Product product = session.get(Product.class, id);
+//            session.getTransaction().commit();
+//            return product;
+//        }
+//    }
+//
+//
     @Override
     public List<Product> findAll() {
         try (Session session = sessionFactoryUtils.getSession()) {
@@ -37,26 +39,38 @@ public class ProductDaoImpl implements ProductDao {
             return products;
         }
     }
+//
+//    @Override
+//    public void saveOrUpdate(Product product) {
+//        try (Session session = sessionFactoryUtils.getSession()) {
+//            session.beginTransaction();
+//            session.saveOrUpdate(product);
+//            session.getTransaction().commit();
+//        }
+//    }
+//
+//    @Override
+//    public void deleteById(Long id) {
+//        try (Session session = sessionFactoryUtils.getSession()) {
+//            session.beginTransaction();
+////            Product product = session.get(Product.class, id);
+////            session.delete(product);
+//            session.createQuery("delete Product p where p.id = :id")
+//                    .setParameter("id", id)
+//                    .executeUpdate();
+//            session.getTransaction().commit();
+//        }
+//    }
 
     @Override
-    public void saveOrUpdate(Product product) {
+    public List<Client> findWhoBought(Long id) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            session.saveOrUpdate(product);
-            session.getTransaction().commit();
-        }
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        try (Session session = sessionFactoryUtils.getSession()) {
-            session.beginTransaction();
-//            Product product = session.get(Product.class, id);
-//            session.delete(product);
-            session.createQuery("delete Product p where p.id = :id")
+            List<Client> clients = session.createQuery("select c from Client c join c.orders o join o.product p where p.id = :id")
                     .setParameter("id", id)
-                    .executeUpdate();
+                    .getResultList();
             session.getTransaction().commit();
+            return clients;
         }
     }
 }
