@@ -1,34 +1,9 @@
 package com.geekbrains.springweb.repositories;
 
 import com.geekbrains.springweb.model.Product;
-import org.springframework.stereotype.Component;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-@Component
-public class ProductRepository {
-    private List<Product> products;
-
-    @PostConstruct
-    public void init() {
-        products = new ArrayList<>(List.of(
-                new Product(1L, 1.13f, "Milk"),
-                new Product(2L, 7.00f, "Butter"),
-                new Product(3L, 0.1f, "Bread"),
-                new Product(4L, 0.84f, "Coffee"),
-                new Product(5L, 4.07f, "Honey")
-        ));
-    }
-
-    public List<Product> getAllProducts() {
-        return Collections.unmodifiableList(products);
-    }
-
-    public Product findById(Long id) {
-        return products.stream().filter(p -> p.getId().equals(id)).findFirst().orElseThrow(() -> new RuntimeException("Product not found"));
-    }
-
+@Repository
+public interface ProductRepository extends JpaRepository <Product, Long> {
 }

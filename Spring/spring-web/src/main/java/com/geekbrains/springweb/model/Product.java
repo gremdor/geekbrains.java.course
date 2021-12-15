@@ -1,10 +1,21 @@
 package com.geekbrains.springweb.model;
 
-public class Product {
-    private Long id;
-    private Float cost;
-    private String name;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "products")
+
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "cost")
+    private Float cost;
+
+    @Column(name = "name")
+    private String name;
 
     public Product() {
     }
@@ -32,13 +43,6 @@ public class Product {
     public String getName() {
         return name;
     }
-
-    public Product(Long id, Float cost, String name) {
-        this.id = id;
-        this.cost = cost;
-        this.name = name;
-    }
-
 
 }
 
