@@ -27,7 +27,7 @@ public class ClientDaoImpl implements ClientDao{
     public List<Product> findWhatBought(Long id) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            List<Product> products = session.createQuery("select p from Product p join p.orders o join o.client c where c.id = :id")
+            List<Product> products = session.createQuery("select o.product from Client c join c.orders o where c.id = :id")
                     .setParameter("id", id)
                     .getResultList();
             session.getTransaction().commit();

@@ -57,9 +57,9 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", title='" + title +
-                ", price=" + price +
+                "', price=" + price +
 //                ", ordered " + orders.size() + " times" +
-                '}' + '\n';
+                "}" + '\n';
     }
 }
 

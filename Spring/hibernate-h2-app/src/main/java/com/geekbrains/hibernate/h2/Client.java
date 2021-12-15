@@ -47,6 +47,6 @@ public class Client {
                 "id=" + id +
                 ", title='" + title +
 //                ", made " + orders.size() + " orders" +
-                '}' + '\n' ;
+                "'}" + '\n' ;
     }
 }

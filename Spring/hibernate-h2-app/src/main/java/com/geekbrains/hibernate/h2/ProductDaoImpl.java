@@ -66,7 +66,7 @@ public class ProductDaoImpl implements ProductDao {
     public List<Client> findWhoBought(Long id) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            List<Client> clients = session.createQuery("select c from Client c join c.orders o join o.product p where p.id = :id")
+            List<Client> clients = session.createQuery("select o.client from Product p join p.orders o where p.id = :id")
                     .setParameter("id", id)
                     .getResultList();
             session.getTransaction().commit();
