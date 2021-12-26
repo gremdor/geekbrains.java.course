@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html ng-app="app" xmlns:filter="http://www.w3.org/1999/xhtml" xmlns:pagination="http://www.w3.org/1999/xhtml"
+      xmlns:limitTo="http://www.w3.org/1999/xhtml" xmlns:orderBy="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://maxcdn.boots/trapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+</head>
+
+<body>
+<div class="container" ng-controller="indexController">
+    <h3>Product list</h3>
+    Min cost: <input type='number' ng-model="cost_min" min="0.0" step="0.01" max="99999999.99"/>
+    Max cost: <input type='number' ng-model="cost_max" min="0.0" step="0.01" max="99999999.99"/>
+    <button class="btn btn-danger" ng-click="loadProducts()">Filter</button>
+    <button class="btn btn-danger" ng-click="clear()">Clear</button>
+
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Product name</td>
+            <td>Cost</td>
+            <td>Action</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductsList.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+            <td>{{p.id}}</td>
+            <td>{{p.name}}</td>
+            <td>
+                <button class="btn btn-primary" ng-click="changeCost(p.id, -0.01)">-</button>
+                {{p.cost}}
+                <button class="btn btn-primary" ng-click="changeCost(p.id, 0.01)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    View <select ng-model="viewby" ng-change="setItemsPerPage(viewby)"><option>3</option><option>5</option><option>10</option><option>20</option><option>30</option><option>40</option><option>50</option></select> records at a time.
+    <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+</div>
+</body>
+</html>

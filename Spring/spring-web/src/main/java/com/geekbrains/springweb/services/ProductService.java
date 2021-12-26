@@ -2,6 +2,7 @@ package com.geekbrains.springweb.services;
 
 import com.geekbrains.springweb.model.Product;
 import com.geekbrains.springweb.repositories.ProductRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,13 +29,14 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-//    @Transactional
-//    public void changeScore(Long ProductId, Integer delta) {
-//        Product Product = ProductRepository.findById(ProductId).orElseThrow(() -> new ResourceNotFoundException("Unable to change Product's score. Product not found, id: " + ProductId));
-//        Product.setScore(Product.getScore() + delta);
-//    }
-//
-//    public List<Product> findByScoreBetween(Integer min, Integer max) {
-//        return ProductRepository.findAllByScoreBetween(min, max);
-//    }
+    @Transactional
+    public void changeCost(Long productId, Float delta) {
+        Product product = productRepository.findById(productId).orElseThrow(() ->
+                new com.geekbrains.spring.web.exceptions.ResourceNotFoundException("Unable to change Product's score. Product not found, id: " + productId));
+        product.setCost(product.getCost() + delta);
+    }
+
+    public List<Product> findByCostBetween(Float min, Float max) {
+        return productRepository.findAllByCostBetween(min, max);
+    }
 }
