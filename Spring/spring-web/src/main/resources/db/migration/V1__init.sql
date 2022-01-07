@@ -13,13 +13,13 @@ values
 (12.0, 'Cream'),
 (1.17,'Lemon'),
 
-(1.13, 'Squid'),
-(7.00, 'Salmon'),
-(0.1, 'Cheese'),
-(0.84, 'Beef'),
-(4.07,'Pork'),
-(1.99, 'Chicken'),
-(6.10, 'Toothaste'),
-(4.31, 'Pasta'),
-(1.01, 'Cake'),
-(1.17,'Oil');
+(3.13, 'Squid'),
+(5.00, 'Salmon'),
+(4.1,  'Cheese'),
+(8.84, 'Beef'),
+(7.07, 'Pork'),
+(4.99, 'Chicken'),
+(1.10, 'Toothaste'),
+(2.31, 'Pasta'),
+(0.91, 'Cake'),
+(1.34, 'Oil');
