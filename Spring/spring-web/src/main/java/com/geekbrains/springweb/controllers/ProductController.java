@@ -1,52 +1,55 @@
 package com.geekbrains.springweb.controllers;
 
+import com.geekbrains.springweb.converters.ProductConverter;
 import com.geekbrains.springweb.dto.ProductDto;
+import com.geekbrains.springweb.exceptions.ResourceNotFoundException;
 import com.geekbrains.springweb.model.Product;
 import com.geekbrains.springweb.services.ProductService;
+import com.geekbrains.springweb.validators.ProductValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
-public class ProductController {
-    private ProductService productService;
+@RequiredArgsConstructor
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+public class ProductController {
+    private final ProductService productService;
+    private final ProductConverter productConverter;
+    private final ProductValidator productValidator;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             @RequestParam(name = "size", defaultValue = "5") Integer size,
-            @RequestParam(name = "min_cost", required = false) Float minCost,
-            @RequestParam(name = "max_cost", required = false) Float maxCost,
-            @RequestParam(name = "name_part", required = false) String partName
+            @RequestParam(name = "min_price", required = false) Float minPrice,
+            @RequestParam(name = "max_price", required = false) Float maxPrice,
+            @RequestParam(name = "title_part", required = false) String partTitle
     ) {
         if (page < 1) {
             page = 1;
         }
-        return productService.find(minCost, maxCost, partName, page, size).
-                map(p -> new ProductDto(p));
+        return productService.find(minPrice, maxPrice, partTitle, page, size).map(
+                p -> productConverter.entityToDto(p)
+        );
     }
 
     @GetMapping("/cnt")
     public Long getCount(
-            @RequestParam(name = "min_cost", required = false) Float minCost,
-            @RequestParam(name = "max_cost", required = false) Float maxCost,
-            @RequestParam(name = "name_part", required = false) String partName
+            @RequestParam(name = "min_price", required = false) Float minPrice,
+            @RequestParam(name = "max_price", required = false) Float maxPrice,
+            @RequestParam(name = "title_part", required = false) String partTitle
     ) {
-        return productService.count(minCost, maxCost, partName);
+        return productService.count(minPrice, maxPrice, partTitle);
     }
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
-        Product product =  productService.findById(id).orElseThrow(() ->
-                new com.geekbrains.spring.web.exceptions.ResourceNotFoundException("Product not found, id: " + id));
-        return new ProductDto(product);
+        Product product = productService.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Product not found, id: " + id));
+        return productConverter.entityToDto(product);
     }
 
     @DeleteMapping("/{id}")
@@ -56,17 +59,17 @@ public class ProductController {
 
     @PostMapping
     public ProductDto saveNewProduct(@RequestBody ProductDto productDto) {
-        Product product = new Product(productDto);
-        product.setId(null);
+        productValidator.validate(productDto);
+        Product product = productConverter.dtoToEntity(productDto);
         product = productService.save(product);
-        return new ProductDto(product);
+        return productConverter.entityToDto(product);
     }
 
     @PutMapping
     public ProductDto updateProduct(@RequestBody ProductDto productDto) {
-        Product product = new Product(productDto);
+        productValidator.validate(productDto);
+        Product product = productConverter.dtoToEntity(productDto);
         product = productService.update(product);
-        return new ProductDto(product);
+        return productConverter.entityToDto(product);
     }
-
 }

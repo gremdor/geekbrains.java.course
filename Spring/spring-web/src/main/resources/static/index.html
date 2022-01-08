@@ -35,21 +35,21 @@
         </div>
         <div class="col-md-4">
             <div class="form-floating input-group-sm">
-                <input type="number" class="form-control" id="filterMinCost" ng-model="filter.min_cost" step="0.01"/>
-                <label for="filterMinCost">Min cost</label>
+                <input type="number" class="form-control" id="filterminPrice" ng-model="filter.min_price" step="0.01"/>
+                <label for="filterminPrice">Min price</label>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-floating input-group-sm">
-                <input type="number" class="form-control" id="filterMaxCost" ng-model="filter.max_cost" step="0.01"/>
-                <label for="filterMaxCost">Max cost</label>
+                <input type="number" class="form-control" id="filtermaxPrice" ng-model="filter.max_price" step="0.01"/>
+                <label for="filtermaxPrice">Max price</label>
             </div>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-light" ng-click="filter()">Filter</button>
+            <button class="btn btn-light" ng-click="filterProduct()">Filter</button>
         </div>
         <div class="col-md-1">
-            <button class="btn btn-secondary" ng-click="clear()">Clear</button>
+            <button class="btn btn-secondary" ng-click="clearFilter()">Clear</button>
         </div>
 
         <div class="col-md-4">
@@ -75,22 +75,50 @@
         <tr>
             <td>ID</td>
             <td>Product name</td>
-            <td>Cost</td>
+            <td>price</td>
             <td>Action</td>
         </tr>
         <tbody>
-        <!--        <tr ng-repeat="p in ProductsList.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">-->
-        <tr ng-repeat="p in ProductsList">
+        <tr ng-repeat="p in ProductsList.content">
             <td>{{p.id}}</td>
-            <td>{{p.name}}</td>
-            <td>{{p.cost}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
             <td>
-                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Remove</button>
+                <button class="btn btn-primary" ng-click="addProductToCart(p.id)">Buy</button>
             </td>
         </tr>
         </tbody>
     </table>
 
+    <h3>Cart</h3>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <td>ID</td>
+            <td>Product name</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Total</td>
+            <td>Action</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="o in Cart.items">
+            <td>{{o.productId}}</td>
+            <td>{{o.productTitle}}</td>
+            <td>{{o.productPrice}}</td>
+            <td>{{o.quantity}}</td>
+            <td>{{o.price}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="removeProductFromCart(o.productId)">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Total</td>
+            <td>{{Cart.totalPrice}}</td>
+        </tr>
+        </tfoot>
+    </table>
 </div>
 </body>
 </html>
