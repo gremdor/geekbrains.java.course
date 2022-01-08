@@ -1,5 +1,7 @@
 package com.geekbrains.springweb.model;
 
+import com.geekbrains.springweb.dto.ProductDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +20,12 @@ public class Product {
     private String name;
 
     public Product() {
+    }
+
+    public Product(ProductDto productDto) {
+        this.id = productDto.getId();
+        this.name = productDto.getName();
+        this.cost  = productDto.getCost();
     }
 
     public void setId(Long id) {
@@ -43,6 +51,7 @@ public class Product {
     public String getName() {
         return name;
     }
+
 
 }
 
