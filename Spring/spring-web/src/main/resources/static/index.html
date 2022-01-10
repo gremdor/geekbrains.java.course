@@ -40,10 +40,11 @@
                             <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
                                     style="margin-left: 10px;" type="submit">Sign in
                             </button>
+                            <button class="btn btn-outline-secondary btn-sm" ng-click="CreateUser()">Sign up</button>
                         </div>
                     </form>
                 </li>
-                <button class="btn btn-outline-secondary btn-sm" ng-click="CreateUser()">Sign up</button>
+
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
                     <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Sign out</button>
                 </li>

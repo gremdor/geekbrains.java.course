@@ -106,8 +106,7 @@ angular.module('app', ['ui.bootstrap', 'ngStorage']).controller('indexController
     };
 
     $scope.CreateUser = function () {
-//        $http.post('http://localhost:8189/app/auth', $scope.user)
-        $http.put(authPath, $scope.user)
+        $http.put(authPath + '/signup', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
