@@ -14,22 +14,23 @@ angular.module('app', ['ui.bootstrap']).controller('indexController', function (
                 }
             }).then(function (response) {
                 $scope.ProductsList = response.data;
+                $scope.totalItems = response.data.totalElements;
             });
     };
 
-    $scope.countProducts = function () {
-        $http({
-            url: contextPath + '/products/cnt',
-            method: 'GET',
-            params: {
-                title_part: $scope.filter ? $scope.filter.name_part : null,
-                min_price: $scope.filter ? $scope.filter.min_price : null,
-                max_price: $scope.filter ? $scope.filter.max_price : null
-                }
-            }).then(function (response) {
-                $scope.totalItems = response.data;
-            });
-    };
+//    $scope.countProducts = function () {
+//        $http({
+//            url: contextPath + '/products/cnt',
+//            method: 'GET',
+//            params: {
+//                title_part: $scope.filter ? $scope.filter.name_part : null,
+//                min_price: $scope.filter ? $scope.filter.min_price : null,
+//                max_price: $scope.filter ? $scope.filter.max_price : null
+//                }
+//            }).then(function (response) {
+//                $scope.totalItems = response.data;
+//            });
+//    };
 
 //    $scope.deleteProduct = function (productId) {
 //        $http.delete(contextPath + '/products/' + productId)
@@ -99,7 +100,7 @@ angular.module('app', ['ui.bootstrap']).controller('indexController', function (
     }
 
     $scope.filterProduct = function() {
-        $scope.countProducts();
+//        $scope.countProducts();
         $scope.loadProducts();
     };
 

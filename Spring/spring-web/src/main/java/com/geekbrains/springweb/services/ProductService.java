@@ -53,18 +53,18 @@ public class ProductService {
         return p;
     }
 
-    public Long count (Float minPrice, Float maxPrice, String partTitle) {
-        Specification<Product> spec = Specification.where(null);
-        if (minPrice != null) {
-            spec = spec.and(ProductSpecifications.priceGreaterThanOrEqualTo(minPrice));
-        }
-        if (maxPrice != null) {
-            spec = spec.and(ProductSpecifications.priceLessThanOrEqualTo(maxPrice));
-        }
-        if (partTitle != null) {
-            spec = spec.and(ProductSpecifications.titleLike(partTitle));
-        }
-
-        return productRepository.count(spec);
-    }
+//    public Long count (Float minPrice, Float maxPrice, String partTitle) {
+//        Specification<Product> spec = Specification.where(null);
+//        if (minPrice != null) {
+//            spec = spec.and(ProductSpecifications.priceGreaterThanOrEqualTo(minPrice));
+//        }
+//        if (maxPrice != null) {
+//            spec = spec.and(ProductSpecifications.priceLessThanOrEqualTo(maxPrice));
+//        }
+//        if (partTitle != null) {
+//            spec = spec.and(ProductSpecifications.titleLike(partTitle));
+//        }
+//
+//        return productRepository.count(spec);
+//    }
 }

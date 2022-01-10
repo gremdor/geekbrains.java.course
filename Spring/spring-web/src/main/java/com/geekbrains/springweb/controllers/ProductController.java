@@ -36,14 +36,14 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/cnt")
-    public Long getCount(
-            @RequestParam(name = "min_price", required = false) Float minPrice,
-            @RequestParam(name = "max_price", required = false) Float maxPrice,
-            @RequestParam(name = "title_part", required = false) String partTitle
-    ) {
-        return productService.count(minPrice, maxPrice, partTitle);
-    }
+//    @GetMapping("/cnt")
+//    public Long getCount(
+//            @RequestParam(name = "min_price", required = false) Float minPrice,
+//            @RequestParam(name = "max_price", required = false) Float maxPrice,
+//            @RequestParam(name = "title_part", required = false) String partTitle
+//    ) {
+//        return productService.count(minPrice, maxPrice, partTitle);
+//    }
 
     @GetMapping("/{id}")
     public ProductDto getProductById(@PathVariable Long id) {
