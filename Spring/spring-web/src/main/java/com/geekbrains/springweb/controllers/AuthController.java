@@ -42,9 +42,8 @@ public class AuthController {
     @PutMapping("/auth/signup")
     public ResponseEntity<?> createUserAndLogin(@RequestBody JwtRequest authRequest) {
         log.info("PUT Method request: "+ authRequest.toString());
-        log.info("user search: " , userService.findByUsername(authRequest.getUsername()));
 
-        if (!userService.findByUsername(authRequest.getUsername()).isEmpty()) {
+        if (userService.existsByUsername(authRequest.getUsername())) {
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "User with this name is already registered"), HttpStatus.BAD_REQUEST);
         }
 
@@ -54,9 +53,9 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @GetMapping("/auth/users")
-    public List<User> getUsers () {
-        return userService.findAll();
-    }
+//    @GetMapping("/auth/users")
+//    public List<User> getUsers () {
+//        return userService.findAll();
+//    }
 
 }

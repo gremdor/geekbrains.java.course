@@ -47,12 +47,15 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
-
-        user.addRole(roleService.findByName("ROLE_USER"));
+        user.setRoles(List.of(roleService.findByName("ROLE_USER") ));
 
         user = userRepository.save(user);
         return loadUserByUsername(username);
     }
 
     public List<User> findAll () {return userRepository.findAll();}
+
+    public boolean existsByUsername (String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

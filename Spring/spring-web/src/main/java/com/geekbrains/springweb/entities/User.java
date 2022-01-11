@@ -41,10 +41,10 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void addRole(Role role){
-        if(roles == null){
-            roles = new ArrayList<Role>();
-        }
-        roles.add(role);
-    }
+//    public void addRole(Role role){
+//        if(roles == null){
+//            roles = new ArrayList<Role>();
+//        }
+//        roles.add(role);
+//    }
 }
