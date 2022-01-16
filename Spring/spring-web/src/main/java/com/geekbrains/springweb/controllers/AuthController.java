@@ -7,7 +7,10 @@ import com.geekbrains.springweb.exceptions.AppError;
 import com.geekbrains.springweb.services.UserService;
 import com.geekbrains.springweb.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,7 +55,6 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
 //    @GetMapping("/auth/users")
 //    public List<User> getUsers () {
 //        return userService.findAll();
