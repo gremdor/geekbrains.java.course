@@ -1,7 +1,7 @@
 package com.geekbrains.springweb.services;
 
 import com.geekbrains.springweb.exceptions.ResourceNotFoundException;
-import com.geekbrains.springweb.model.Product;
+import com.geekbrains.springweb.entities.Product;
 import com.geekbrains.springweb.repositories.ProductRepository;
 import com.geekbrains.springweb.repositories.specifications.ProductSpecifications;
 import lombok.RequiredArgsConstructor;

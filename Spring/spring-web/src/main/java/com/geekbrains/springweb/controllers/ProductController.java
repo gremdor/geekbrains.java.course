@@ -3,7 +3,7 @@ package com.geekbrains.springweb.controllers;
 import com.geekbrains.springweb.converters.ProductConverter;
 import com.geekbrains.springweb.dto.ProductDto;
 import com.geekbrains.springweb.exceptions.ResourceNotFoundException;
-import com.geekbrains.springweb.model.Product;
+import com.geekbrains.springweb.entities.Product;
 import com.geekbrains.springweb.services.ProductService;
 import com.geekbrains.springweb.validators.ProductValidator;
 import lombok.RequiredArgsConstructor;

@@ -2,9 +2,8 @@ package com.geekbrains.springweb.services;
 
 import com.geekbrains.springweb.converters.ProductConverter;
 import com.geekbrains.springweb.dto.Cart;
-import com.geekbrains.springweb.dto.ProductDto;
 import com.geekbrains.springweb.exceptions.ResourceNotFoundException;
-import com.geekbrains.springweb.model.Product;
+import com.geekbrains.springweb.entities.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
